@@ -1,0 +1,88 @@
+ALGORITHM distincts_elements
+VAR
+ set1:=Array_of INTEGER;
+ set2:=Array_of INTEGER;
+ i:=INTEGER;
+ j:=INTEGER;
+ sum:=0;
+BEGIN
+ Read (set1);
+ Read (set2);
+   FOR i FROM 0 TO set1.length-1 STEP 1 DO;
+   equal:=false
+FOR j FROM 0 TO set2.length-1 STEP 1 DO;
+    if set1[i]=set2[j];
+     equal:=true;
+END_FOR
+IF (equal=false) THEN
+   sum:sum+set1[i]
+END_IF
+END_FOR
+
+ FOR j FROM 0 TO set2.length-1 STEP 1 DO;
+   equal:=false
+FOR i FROM 0 TO set1.length-1 STEP 1 DO;
+    if set2[j]=set1[i];
+     equal:=true;
+     END_IF
+END_FOR
+IF (equal=false) THEN
+   sum:sum+set2[j]
+END_IF
+END_FOR
+
+
+/*  equal element  */
+FOR i FROM 0 TO set1.length-1 STEP 1 DO;
+   equal:=true
+FOR j FROM 0 TO set2.length-1 STEP 1 DO;
+    if set1[i]=set2[j];
+     equal:=false;
+END_FOR
+IF (equal=true) THEN
+   sum:sum+set1[i]
+   END_IF
+
+FOR j FROM 0 TO set2.length-1 STEP 1 DO;
+   equal:=true
+FOR i FROM 0 TO set1.length-1 STEP 1 DO;
+    if set2[j]=set1[i];
+     equal:=false;
+END_FOR
+IF (equal=true) THEN
+   sum:sum+set2[j]
+   END_IF
+
+
+
+END_FOR
+/* solution with htab*/
+VAR
+ htab:= HASH_TABLE<integer,integer>
+ set1:=Array_of INTEGER;
+ set2:=Array_of INTEGER;
+ sum_distinct:=0;
+ sum_equal:=0;
+ set_keys:=Array_of INTEGER;
+
+BEGIN
+FOR i FROM 0 TO set1.length-1 STEP 1  DO;
+    htab.insert(set1[i],1);
+END_FOR
+FOR j FROM 0 TO set2.length-1 STEP 1  DO;
+   count:=1
+   IF (htab.lookup(set2[i])= true) THEN
+      htab.insert(set2[i],count+1);
+      else 
+      htab.insert(set2[i],1);
+   END_IF
+END_FOR
+ set_keys:=htab.get_keys;
+ FOR i FROM 0 TO set_keys.length-1 STEP 1  DO;
+    IF (htab.get(set_keys[i])=1) THEN
+       sum_distinct=sum_distinct+set_keys[i]
+       else
+       sum_equal=sum_equal+(set_keys[i]*2)
+    END_IF
+ END_FOR
+ END
